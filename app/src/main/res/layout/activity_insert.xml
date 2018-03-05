@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="product name"
+        android:id="@+id/nameEdit"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/quantEdit"
+        android:inputType="number"
+        android:hint="quantitity"
+        android:layout_below="@id/nameEdit"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/priceEdit"
+        android:hint="price"
+        android:inputType="text"
+        android:layout_below="@id/quantEdit"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/inButton"
+        android:text="InsertData"
+
+        android:layout_centerInParent="true"/>
+    <TextView
+        android:id="@+id/display_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Number of rows in inventory database table: "
+        android:layout_below="@id/inButton"/>
+
+</RelativeLayout>

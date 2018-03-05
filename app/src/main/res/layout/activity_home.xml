@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/createDatabase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="create Database"
+        android:layout_margin="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/viewItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Items"
+        android:layout_margin="20dp"
+        android:layout_below="@id/createDatabase"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:id="@+id/insertItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INSERT ITEM"
+        android:layout_margin="20dp"
+        android:layout_below="@id/viewItems"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:layout_below="@id/insertItems"
+        android:layout_margin="20dp"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DELETE"
+        android:layout_below="@id/update"
+        android:layout_margin="20dp"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/display_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Number of rows in inventory database table: "
+        android:layout_below="@id/inButton"/>
+
+
+</RelativeLayout>
