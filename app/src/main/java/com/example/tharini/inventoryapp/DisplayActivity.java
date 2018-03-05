@@ -67,7 +67,8 @@ public class DisplayActivity extends AppCompatActivity implements LoaderManager.
                 startActivity(intent);
             }
         });
-        getLoaderManager().initLoader(INVENTORY_LOADER,null,this);
+
+        getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
     }
 
 

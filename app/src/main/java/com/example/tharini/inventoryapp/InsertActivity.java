@@ -25,39 +25,38 @@ import com.example.tharini.inventoryapp.data.InventoryDbHelper;
 public class InsertActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int EXISTING_INVENTORY_LOADER = 0;
-    private InventoryDbHelper mDbHelper;
+
     EditText mPnameEditText;
     EditText mPquantityEditText;
     EditText mPprice;
+    private Uri mCurrentStockUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        mDbHelper = new InventoryDbHelper(this);
         setContentView(R.layout.activity_insert);
 
         Intent intent = getIntent();
-        Uri currentStockUri =intent.getData();
+        mCurrentStockUri = intent.getData();
 
-        if(currentStockUri == null)
-        {
+        if (mCurrentStockUri == null) {
             setTitle("Add a product");
-        }
-        else
-        {
+        } else {
             setTitle("Edit a product");
-        }
-        mPnameEditText = (EditText)findViewById(R.id.nameEdit);
-        mPquantityEditText = (EditText)findViewById(R.id.quantEdit);
-        mPprice = (EditText)findViewById(R.id.priceEdit);
+            getLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
 
-//       savePet();
-        Button inButton = (Button)findViewById(R.id.inButton);
+        }
+        mPnameEditText = (EditText) findViewById(R.id.nameEdit);
+        mPquantityEditText = (EditText) findViewById(R.id.quantEdit);
+        mPprice = (EditText) findViewById(R.id.priceEdit);
+
+//       insertStock();
+        Button inButton = (Button) findViewById(R.id.inButton);
         inButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                savePet();
+                insertStock();
                 finish();
                 //displayDatabaseInfo();
             }
@@ -68,8 +67,7 @@ public class InsertActivity extends AppCompatActivity implements LoaderManager.L
     }
 
 
-    private void savePet()
-    {
+    private void insertStock() {
         String pNameString = mPnameEditText.getText().toString().trim();
         String pQuantitySring = mPquantityEditText.getText().toString().trim();
         String pPriceString = mPprice.getText().toString().trim();
@@ -77,43 +75,76 @@ public class InsertActivity extends AppCompatActivity implements LoaderManager.L
         int price = Integer.parseInt(pPriceString);
         InventoryDbHelper mDbHelper = new InventoryDbHelper(this);
 
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
         ContentValues values = new ContentValues();
 
         values.put(InventoryEntry.COLUMN_PRODUCT_NAME, pNameString);
         values.put(InventoryEntry.COLUMN_QUANTITY, quantity);
         values.put(InventoryEntry.COLUMN_PRICE, price);
-        // Insert a new pet into the provider, returning the content URI for the new pet.
         Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
-
-        // Show a toast message depending on whether or not the insertion was successful
         if (newUri == null) {
-            // If the new content URI is null, then there was an error with insertion.
-            Toast.makeText(this, "inserting failed",
+            Toast.makeText(this, "insertion failed",
                     Toast.LENGTH_SHORT).show();
-        } else {
+        } else
+
+        {
             // Otherwise, the insertion was successful and we can display a toast.
-            Toast.makeText(this, "inserting successful",
+            Toast.makeText(this, "insertion successful",
                     Toast.LENGTH_SHORT).show();
         }
-        }
+    }
 
 
 
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-       return null;
-    }
+       String[] projection = {
+               InventoryEntry._ID,
+               InventoryEntry.COLUMN_PRODUCT_NAME,
+               InventoryEntry.COLUMN_QUANTITY,
+               InventoryEntry.COLUMN_PRICE };
+       return new CursorLoader(this,
+               mCurrentStockUri,
+               projection,
+               null,
+               null,
+               null);
+       }
+
 
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 
+        if(cursor == null || cursor.getCount() < 1)
+        {
+            return;
+        }
+
+        if (cursor.moveToFirst())
+        {
+            int nameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_NAME);
+            int quantityColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_QUANTITY);
+            int priceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRICE);
+
+
+            String name = cursor.getString(nameColumnIndex);
+            int quantity = cursor.getInt(quantityColumnIndex);
+            int price = cursor.getInt(priceColumnIndex);
+
+
+            mPnameEditText.setText(name);
+            mPquantityEditText.setText(Integer.toString(quantity));
+            mPprice.setText(Integer.toString(price));
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+        mPnameEditText.setText("");
+        mPquantityEditText.setText("");
+        mPprice.setText("");
     }
 }

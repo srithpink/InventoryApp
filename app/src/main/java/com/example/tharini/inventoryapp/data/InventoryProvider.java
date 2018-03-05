@@ -27,7 +27,7 @@ public class InventoryProvider extends ContentProvider {
 
     static {
         sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_STOCK, STOCK);
-        sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_STOCK + "/#", STOCK_ID);
+        sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY,InventoryContract.PATH_STOCK+"/#",STOCK_ID);
     }
 
     @Override
