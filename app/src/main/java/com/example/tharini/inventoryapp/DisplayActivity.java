@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ public class DisplayActivity extends AppCompatActivity implements LoaderManager.
     EditText mPnameEditText,mPquantityEditText,mPprice;
     private  static final int INVENTORY_LOADER = 0;
     InventoryCursorAdapter mCursorAdapter;
-    private Uri mCurrentStockUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +38,6 @@ public class DisplayActivity extends AppCompatActivity implements LoaderManager.
         mPquantityEditText = (EditText)findViewById(R.id.quantEdit);
         mPprice = (EditText)findViewById(R.id.priceEdit);
 
-//        Intent intent = getIntent();
-//        mCurrentStockUri =intent.getData();
-//
-//        if(mCurrentStockUri == null)
-//        {
-//            setTitle("Add a product");
-//        }
-//        else
-//        {
-//            setTitle("Edit a product");
-//        }
         ListView inventoryListView = (ListView) findViewById(R.id.list);
 
         View emptyView = findViewById(R.id.empty_view);

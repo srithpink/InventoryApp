@@ -1,38 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="product name"
-        android:id="@+id/nameEdit"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/quantEdit"
-        android:inputType="number"
-        android:hint="quantitity"
-        android:layout_below="@id/nameEdit"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/priceEdit"
-        android:hint="price"
-        android:inputType="text"
-        android:layout_below="@id/quantEdit"/>
-    <Button
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_weight="1"
+    android:padding="4dp"
+    android:orientation="vertical">
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/inButton"
-        android:text="InsertData"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="Name"
+            android:paddingRight="70dp"/>
 
-        android:layout_centerInParent="true"/>
-    <TextView
-        android:id="@+id/display_view"
+        <EditText
+            android:id="@+id/nameEdit"
+            android:layout_width="269dp"
+            android:layout_height="wrap_content"
+            android:hint="product name" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of rows in inventory database table: "
-        android:layout_below="@id/inButton"/>
+        android:orientation="horizontal">
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+
+            android:text="Quantity" />
+
+        <EditText
+            android:id="@+id/quantEdit"
+            android:layout_width="276dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nameEdit"
+            android:hint="quantitity"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="108dp"
+            android:layout_height="wrap_content"
+            android:text="Price" />
+
+        <EditText
+            android:id="@+id/priceEdit"
+            android:layout_width="285dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/quantEdit"
+            android:hint="price"
+            android:inputType="text" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="90dp">
+        <ImageButton
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:id="@+id/inButton"
+            android:src="@mipmap/ic_save_white_48dp"
+            android:text="SaveProduct"
+            android:background="@drawable/roundedcorner"
+            android:layout_marginRight="20dp"/>
+
+        <ImageButton
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:id="@+id/deleteData"
+            android:text="DeleteProduct"
+            android:src="@mipmap/ic_delete_white_48dp"
+            android:background="@drawable/roundedcorner"
+            android:layout_marginRight="20dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -12,17 +12,21 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ChooseActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".InsertActivity" />
         <activity android:name=".DisplayActivity" />
+
         <provider
             android:name=".data.InventoryProvider"
             android:authorities="com.example.tharini.inventoryapp"
-            android:exported = "false" />
+            android:exported="false" />
+
 
     </application>
 

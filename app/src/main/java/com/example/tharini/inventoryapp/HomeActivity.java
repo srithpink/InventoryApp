@@ -5,9 +5,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.tharini.inventoryapp.DisplayActivity;
 import com.example.tharini.inventoryapp.data.InventoryDbHelper;
 import com.example.tharini.inventoryapp.data.InventoryContract.InventoryEntry;
@@ -22,8 +26,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Button goToInsertActivity = (Button)findViewById(R.id.insertItems);
-        Button goToDisplayActivity = (Button) findViewById(R.id.viewItems);
+        ImageButton goToInsertActivity = (ImageButton)findViewById(R.id.insertItems);
+        ImageButton goToDisplayActivity = (ImageButton) findViewById(R.id.viewItems);
         goToInsertActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,6 +44,13 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        ImageButton delButton = (ImageButton) findViewById(R.id.delete);
+        delButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteAllStocks();
+            }
+        });
 
          InventoryDbHelper mDbHelper = new InventoryDbHelper(this);
     }
@@ -50,5 +61,11 @@ public class HomeActivity extends AppCompatActivity {
 //        super.onStart();
 //        displayDatabaseInfo();
 //    }
+private void deleteAllStocks() {
+    int rowsDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, null, null);
+    Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
+    Toast.makeText(this, "deleted successfully",
+            Toast.LENGTH_SHORT).show();
+}
 
 }

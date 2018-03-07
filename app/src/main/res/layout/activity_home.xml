@@ -1,55 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#00bfa5">
 
-    <Button
-        android:id="@+id/createDatabase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="create Database"
-        android:layout_margin="20dp"
-        android:layout_centerHorizontal="true" />
 
-    <Button
+       <ImageButton
         android:id="@+id/viewItems"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:text="View Items"
-        android:layout_margin="20dp"
-        android:layout_below="@id/createDatabase"
+        android:src="@mipmap/ic_shopping_cart_white_48dp"
+        android:background="@drawable/roundedcorner"
+         android:layout_margin="20dp"
+         android:layout_marginBottom="25dp"
         android:layout_centerHorizontal="true" />
-    <Button
-        android:id="@+id/insertItems"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="INSERT ITEM"
-        android:layout_margin="20dp"
-        android:layout_below="@id/viewItems"
-        android:layout_centerHorizontal="true" />
+      <TextView
+          android:id="@+id/stockText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Stocks"
+          android:fontFamily="serif-monospace"
+          android:layout_below="@id/viewItems"
+          android:textColor="#ffffff"
 
-    <Button
-        android:id="@+id/update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update"
-        android:layout_below="@id/insertItems"
+          android:textStyle="bold"
+          android:textSize="20sp"
+          android:layout_centerHorizontal="true"/>
+    <ImageButton
+        android:id="@+id/insertItems"
+        android:text="INSERT ITEM"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:src="@mipmap/ic_add_white_48dp"
+        android:background="@drawable/roundedcorner"
         android:layout_margin="20dp"
+        android:layout_marginTop="55dp"
+
+        android:layout_below="@id/stockText"
         android:layout_centerHorizontal="true" />
-    <Button
-        android:id="@+id/delete"
+    <TextView
+        android:id="@+id/addText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Add product"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:fontFamily="serif-monospace"
+        android:layout_below="@id/insertItems"
+        android:textColor="#ffffff"
+        android:layout_centerHorizontal="true"/>
+
+
+    <ImageButton
+        android:id="@+id/delete"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:text="DELETE"
-        android:layout_below="@id/update"
+        android:layout_below="@id/addText"
         android:layout_margin="20dp"
+        android:src="@mipmap/ic_delete_white_48dp"
+        android:background="@drawable/roundedcorner"
         android:layout_centerHorizontal="true"/>
     <TextView
-        android:id="@+id/display_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of rows in inventory database table: "
-        android:layout_below="@id/inButton"/>
+        android:text="Delete Stocks"
+        android:fontFamily="serif-monospace"
+        android:layout_below="@id/delete"
+        android:textColor="#ffffff"
+        android:paddingBottom="50dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"/>
+
 
 
 </RelativeLayout>

@@ -1,18 +1,22 @@
 package com.example.tharini.inventoryapp;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.tharini.inventoryapp.data.InventoryContract.InventoryEntry;
@@ -24,7 +28,7 @@ import com.example.tharini.inventoryapp.data.InventoryDbHelper;
 
 public class InsertActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int EXISTING_INVENTORY_LOADER = 0;
+    private static final int EXISTING_INVENTORY_LOADER = 1;
 
     EditText mPnameEditText;
     EditText mPquantityEditText;
@@ -42,8 +46,31 @@ public class InsertActivity extends AppCompatActivity implements LoaderManager.L
 
         if (mCurrentStockUri == null) {
             setTitle("Add a product");
+            ImageButton button = (ImageButton) findViewById(R.id.deleteData);
+            button.setVisibility(View.GONE);
+
         } else {
             setTitle("Edit a product");
+            ImageButton button = (ImageButton) findViewById(R.id.deleteData);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDeleteConfirmationDialog();
+                }
+            });
+//            ImageButton mailButton = (ImageButton) findViewById(R.id.emailSummary);
+//            mailButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent intent = new Intent(Intent.ACTION_SEND);
+//                    intent.setType("text/plain");
+//                    intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
+//                    intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+//                    intent.putExtra(Intent.EXTRA_TEXT, "I'm email body."  );
+//
+//                    startActivity(Intent.createChooser(intent, "Send Email"));
+//                }
+//            });
             getLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
 
         }
@@ -51,12 +78,12 @@ public class InsertActivity extends AppCompatActivity implements LoaderManager.L
         mPquantityEditText = (EditText) findViewById(R.id.quantEdit);
         mPprice = (EditText) findViewById(R.id.priceEdit);
 
-//       insertStock();
-        Button inButton = (Button) findViewById(R.id.inButton);
+//       saveStock();
+        ImageButton inButton = (ImageButton) findViewById(R.id.inButton);
         inButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insertStock();
+                saveStock();
                 finish();
                 //displayDatabaseInfo();
             }
@@ -64,66 +91,87 @@ public class InsertActivity extends AppCompatActivity implements LoaderManager.L
 
 
 
+
     }
 
 
-    private void insertStock() {
+    private void saveStock() {
         String pNameString = mPnameEditText.getText().toString().trim();
         String pQuantitySring = mPquantityEditText.getText().toString().trim();
         String pPriceString = mPprice.getText().toString().trim();
-        int quantity = Integer.parseInt(pQuantitySring);
+
         int price = Integer.parseInt(pPriceString);
-        InventoryDbHelper mDbHelper = new InventoryDbHelper(this);
 
 
+        int quantity = 0;
+        if (!TextUtils.isEmpty(pQuantitySring)) {
+            quantity = Integer.parseInt(pQuantitySring);
+        }
         ContentValues values = new ContentValues();
 
         values.put(InventoryEntry.COLUMN_PRODUCT_NAME, pNameString);
         values.put(InventoryEntry.COLUMN_QUANTITY, quantity);
         values.put(InventoryEntry.COLUMN_PRICE, price);
-        Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
-        if (newUri == null) {
-            Toast.makeText(this, "insertion failed",
-                    Toast.LENGTH_SHORT).show();
-        } else
 
-        {
-            // Otherwise, the insertion was successful and we can display a toast.
-            Toast.makeText(this, "insertion successful",
-                    Toast.LENGTH_SHORT).show();
+        if (mCurrentStockUri == null) {
+            // This is a NEW pet, so insert a new pet into the provider,
+            // returning the content URI for the new pet.
+            Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
+
+            // Show a toast message depending on whether or not the insertion was successful.
+            if (newUri == null) {
+                // If the new content URI is null, then there was an error with insertion.
+                Toast.makeText(this, "insertion failed",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the insertion was successful and we can display a toast.
+                Toast.makeText(this, "insertion successful",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            int rowsAffected = getContentResolver().update(mCurrentStockUri, values, null, null);
+
+            if (rowsAffected == 0) {
+                Toast.makeText(this, "update failed",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the update was successful and we can display a toast.
+                Toast.makeText(this, "update successful",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+
         }
+
     }
-
-
 
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-       String[] projection = {
-               InventoryEntry._ID,
-               InventoryEntry.COLUMN_PRODUCT_NAME,
-               InventoryEntry.COLUMN_QUANTITY,
-               InventoryEntry.COLUMN_PRICE };
-       return new CursorLoader(this,
-               mCurrentStockUri,
-               projection,
-               null,
-               null,
-               null);
-       }
+        String[] projection = {
+                InventoryEntry._ID,
+                InventoryEntry.COLUMN_PRODUCT_NAME,
+                InventoryEntry.COLUMN_QUANTITY,
+                InventoryEntry.COLUMN_PRICE};
+        Log.v("Editor Activity", "Loader Cursor");
+        return new CursorLoader(this,
+                mCurrentStockUri,
+                projection,
+                null,
+                null,
+                null);
 
+    }
 
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 
-        if(cursor == null || cursor.getCount() < 1)
-        {
+        if (cursor == null || cursor.getCount() < 1) {
             return;
         }
 
-        if (cursor.moveToFirst())
-        {
+        if (cursor.moveToFirst()) {
             int nameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_NAME);
             int quantityColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRICE);
@@ -147,4 +195,55 @@ public class InsertActivity extends AppCompatActivity implements LoaderManager.L
         mPquantityEditText.setText("");
         mPprice.setText("");
     }
+
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the postivie and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the pet.
+                deletePet();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /**
+     * Perform the deletion of the pet in the database.
+     */
+    private void deletePet() {
+        if (mCurrentStockUri != null) {
+            // Call the ContentResolver to delete the pet at the given content URI.
+            // Pass in null for the selection and selection args because the mCurrentPetUri
+            // content URI already identifies the pet that we want.
+            int rowsDeleted = getContentResolver().delete(mCurrentStockUri, null, null);
+
+            // Show a toast message depending on whether or not the delete was successful.
+            if (rowsDeleted == 0) {
+                // If no rows were deleted, then there was an error with the delete.
+                Toast.makeText(this, getString(R.string.editor_delete_pet_failed),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the delete was successful and we can display a toast.
+                Toast.makeText(this, getString(R.string.editor_delete_pet_successful),
+                        Toast.LENGTH_SHORT).show();
+            }
+            finish();
+        }
+    }
+
 }

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical"  >
 
     <TextView
         android:id="@+id/name"
@@ -14,11 +13,25 @@
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="#2B3D4D"  />
 
+    <ImageView
+        android:id="@+id/shopNow"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="19dp"
+        android:layout_marginRight="19dp"
+        android:background="@drawable/roundedcorner"
+        android:src="@mipmap/ic_create_white_48dp" />
+
+
     <TextView
         android:id="@+id/quantityL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
+        android:layout_below="@+id/name"
         android:textAppearance="?android:textAppearanceSmall"
         android:textColor="#AEB6BD"  />
-</LinearLayout>
+</RelativeLayout>

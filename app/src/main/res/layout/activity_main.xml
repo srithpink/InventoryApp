@@ -5,15 +5,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.tharini.inventoryapp.MainActivity">
+    tools:context="com.example.tharini.inventoryapp.MainActivity"
+    android:background="#00bfa5">
 
-    <Button
+
+
+    <ImageButton
         android:id="@+id/goToInventory"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/roundedcorner"
+        android:src="@mipmap/ic_store_white_48dp"
+        android:text="Lets go!"/>
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textColor="@color/colorPrimary"
-        android:text="Go to inventory!"/>
-
+        android:id="@+id/inventoryText"
+        android:layout_below="@id/goToInventory"
+        android:text="Lets go to Inventory!"
+        android:textColor="#ffffff"
+        android:fontFamily="serif-monospace"
+        android:textSize="25sp"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

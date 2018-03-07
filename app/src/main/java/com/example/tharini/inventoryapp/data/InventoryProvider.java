@@ -19,7 +19,7 @@ import com.example.tharini.inventoryapp.data.InventoryContract.InventoryEntry;
 public class InventoryProvider extends ContentProvider {
 
 
-    private InventoryDbHelper mDbHelper;
+
     private static final int STOCK = 100;
     private static final int STOCK_ID = 101;
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -27,12 +27,14 @@ public class InventoryProvider extends ContentProvider {
 
     static {
         sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_STOCK, STOCK);
-        sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY,InventoryContract.PATH_STOCK+"/#",STOCK_ID);
+        sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY,InventoryContract.PATH_STOCK + "/#",STOCK_ID);
     }
 
+    private InventoryDbHelper mDbHelper;
     @Override
     public boolean onCreate() {
         mDbHelper = new InventoryDbHelper(getContext());
+        Log.v(LOG_TAG, " TEST mDbHelper" + mDbHelper);
         return true;
     }
 
@@ -53,7 +55,7 @@ public class InventoryProvider extends ContentProvider {
                 cursor = database.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case STOCK_ID:
-                selection = InventoryEntry._ID + "=";
+                selection = InventoryEntry._ID+"=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 cursor = database.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
@@ -62,7 +64,7 @@ public class InventoryProvider extends ContentProvider {
                 throw new IllegalArgumentException("cannot query unknown URI" + uri);
         }
 
-        cursor.setNotificationUri(getContext().getContentResolver(),uri);
+
         return cursor;
     }
 
@@ -155,7 +157,7 @@ public class InventoryProvider extends ContentProvider {
             case STOCK:
                 return updateStock(uri, contentValues, selection, selectionArgs);
             case STOCK_ID:
-                selection = InventoryEntry._ID + "?";
+                selection = InventoryEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
                 return updateStock(uri, contentValues, selection, selectionArgs);
