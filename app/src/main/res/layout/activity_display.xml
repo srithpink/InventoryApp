@@ -31,7 +31,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-medium"
             android:paddingTop="16dp"
-            android:text="@string/empty_view_title_text"
+            android:text="its time to build our buisness"
             android:textAppearance="?android:textAppearanceMedium"/>
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:paddingTop="8dp"
-            android:text="@string/empty_view_subtitle_text"
+            android:text="Lets start our work"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#A2AAB0"/>
     </RelativeLayout>

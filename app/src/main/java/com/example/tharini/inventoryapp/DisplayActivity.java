@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class DisplayActivity extends AppCompatActivity implements LoaderManager.
         inventoryListView.setEmptyView(emptyView);
         mCursorAdapter = new InventoryCursorAdapter(this,null);
         inventoryListView.setAdapter(mCursorAdapter);
+
 
         inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

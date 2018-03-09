@@ -118,6 +118,8 @@ public class InventoryProvider extends ContentProvider {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
             return null;
         }
+
+
         getContext().getContentResolver().notifyChange(uri,null);
             return ContentUris.withAppendedId(uri, id);
 

@@ -58,19 +58,7 @@ public class InsertActivity extends AppCompatActivity implements LoaderManager.L
                     showDeleteConfirmationDialog();
                 }
             });
-//            ImageButton mailButton = (ImageButton) findViewById(R.id.emailSummary);
-//            mailButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent(Intent.ACTION_SEND);
-//                    intent.setType("text/plain");
-//                    intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
-//                    intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
-//                    intent.putExtra(Intent.EXTRA_TEXT, "I'm email body."  );
-//
-//                    startActivity(Intent.createChooser(intent, "Send Email"));
-//                }
-//            });
+
             getLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
 
         }
@@ -204,7 +192,7 @@ public class InsertActivity extends AppCompatActivity implements LoaderManager.L
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Delete" button, so delete the pet.
-                deletePet();
+                deleteStock();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -225,7 +213,7 @@ public class InsertActivity extends AppCompatActivity implements LoaderManager.L
     /**
      * Perform the deletion of the pet in the database.
      */
-    private void deletePet() {
+    private void deleteStock() {
         if (mCurrentStockUri != null) {
             // Call the ContentResolver to delete the pet at the given content URI.
             // Pass in null for the selection and selection args because the mCurrentPetUri
